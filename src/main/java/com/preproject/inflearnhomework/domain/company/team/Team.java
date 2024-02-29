@@ -9,6 +9,7 @@ import lombok.*;
 
 @Entity
 @Getter
+@Setter
 public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,4 +31,6 @@ public class Team {
     public void addMemberCount() {
         ++memberCount;
     }
+
+
 }

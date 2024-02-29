@@ -1,11 +1,14 @@
 package com.preproject.inflearnhomework.controller.company;
 
+import com.preproject.inflearnhomework.domain.company.team.Team;
 import com.preproject.inflearnhomework.dto.company.member.request.MemberCreateRequest;
+import com.preproject.inflearnhomework.dto.company.member.response.MemberListResponse;
 import com.preproject.inflearnhomework.dto.company.team.request.TeamCreateRequest;
+import com.preproject.inflearnhomework.dto.company.team.response.TeamListResponse;
 import com.preproject.inflearnhomework.service.company.CompanyService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class CompanyController {
@@ -24,5 +27,15 @@ public class CompanyController {
     @PostMapping("/create/member")
     public void createMember(@RequestBody MemberCreateRequest request){
         companyService.createMember(request.getName(),request.getTeamName(),request.isRole(),request.getBirthday(),request.getWorkStartDate());
+    }
+
+    @GetMapping("/view/teamlist")
+    public List<TeamListResponse> viewTeamList(){
+        return companyService.teamList();
+    }
+
+    @GetMapping("/view/memberlist")
+    public List<MemberListResponse> viewMemberList(){
+        return companyService.memberList();
     }
 }
