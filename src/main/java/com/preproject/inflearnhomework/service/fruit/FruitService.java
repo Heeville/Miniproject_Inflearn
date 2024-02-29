@@ -8,6 +8,7 @@ import com.preproject.inflearnhomework.dto.fruit.response.FruitListResponse;
 import com.preproject.inflearnhomework.dto.fruit.response.FruitPriceSumResponse;
 import com.preproject.inflearnhomework.exception.InvalidOptionException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -22,11 +23,13 @@ public class FruitService {
         this.fruitRepository = fruitRepository;
     }
 
+    @Transactional
     public void save(CreateFruitRequest request){
         fruitRepository.save(new Fruit2(request.getName(), request.getWarehousingDate(),request.getPrice(), request.isSales()));
 
     }
 
+    @Transactional
     public void recordFruit(Long id){
         boolean b = fruitRepository.existsById(id);
         if (!b){
@@ -34,6 +37,7 @@ public class FruitService {
         }
     }
 
+    @Transactional
     public FruitPriceSumResponse SalesPrice(String name){
         boolean isin = fruitRepository.existsByName(name);
         if (!isin){
@@ -46,6 +50,7 @@ public class FruitService {
         return new FruitPriceSumResponse(sales,notsales);
     }
 
+    @Transactional
     public FruitCountResponse fruitCount(String name){
         boolean isin = fruitRepository.existsByName(name);
         if (!isin){
@@ -56,6 +61,7 @@ public class FruitService {
         return new FruitCountResponse(counts);
     }
 
+    @Transactional
     public List<FruitListResponse> fruitListResponses(String option,long price)
     {
         if (option.equals("GTE")){
