@@ -1,0 +1,30 @@
+[33mcommit 4c77e14dfe2d96f0d9d5ea9af2bf0b75ab15931b[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Merge: 39d76f0 a28c2aa
+Author: Heeville <jinuk0613@gmail.com>
+Date:   Thu Feb 29 17:40:18 2024 +0900
+
+    Merge branch 'master' of https://github.com/Heeville/Miniproject_Inflearn
+
+[33mcommit 39d76f0f7dd2c7a95b287d7fe685130f64925c2c[m
+Author: Heeville <jinuk0613@gmail.com>
+Date:   Thu Feb 29 17:37:02 2024 +0900
+
+    프로젝트 1단계_팀&멤버 생성 기능 구현
+
+[33mcommit a28c2aa973f5b5a21885a2cfc3d6e62f6f312935[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: jinuk_hong <122798322+Heeville@users.noreply.github.com>
+Date:   Thu Feb 29 15:39:06 2024 +0900
+
+    README.md 추가
+
+[33mcommit 88cd0b0bff730eef8632bf56ce83fb7cec174251[m
+Author: Heeville <jinuk0613@gmail.com>
+Date:   Thu Feb 29 15:38:13 2024 +0900
+
+    트랜젝션 추가
+
+[33mcommit 1b87d42bb4445785be468c37ec0dd5fe662e15ff[m
+Author: Heeville <jinuk0613@gmail.com>
+Date:   Thu Feb 29 00:19:38 2024 +0900
+
+    프로젝트 0단계 완료
