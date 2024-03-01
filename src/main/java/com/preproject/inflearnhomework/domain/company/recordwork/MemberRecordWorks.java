@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 
@@ -18,14 +19,14 @@ public class MemberRecordWorks {
     Long id;
 
     String name;
-    Date today;
+    LocalDate today;
     LocalTime enter_work;
 
     LocalTime leave_work;
 
     protected MemberRecordWorks(){}
 
-    public MemberRecordWorks(Member member, Date today, LocalTime enter_work) {
+    public MemberRecordWorks(Member member, LocalDate today, LocalTime enter_work) {
         this.member=member;
         this.today = today;
         this.enter_work = enter_work;

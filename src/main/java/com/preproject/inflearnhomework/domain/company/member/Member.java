@@ -4,7 +4,9 @@ import com.preproject.inflearnhomework.domain.company.recordwork.MemberRecordWor
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,15 +21,15 @@ public class Member {
     String name;
     String teamName;
     boolean isManager;
-    Date birthday;
-    Date workStartDate;
+    LocalDate birthday;
+    LocalDate workStartDate;
 
     @OneToMany(mappedBy = "member",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MemberRecordWorks> memberRecordWorks =new ArrayList<>();
 
     public Member(){}
 
-    public Member(String name, String teamName, boolean isManager, Date birthday, Date workStartDate) {
+    public Member(String name, String teamName, boolean isManager, LocalDate birthday, LocalDate workStartDate) {
         this.name = name;
         this.teamName = teamName;
         this.isManager=isManager;
@@ -35,11 +37,18 @@ public class Member {
         this.workStartDate = workStartDate;
     }
 
-    public void enterWork(Date today, LocalTime enter){
+    public void enterWork(LocalDate today, LocalTime enter){
         //this.memberRecordWorks.add(new MemberRecordWorks(this.id,this.name,today,enter));
         this.memberRecordWorks.add(new MemberRecordWorks(this,today,enter));
     }
 
+    public void leaveWork(LocalDate today,LocalTime enter){
+        for(MemberRecordWorks m:memberRecordWorks){
+            if (m.getToday().equals(today)){
+                m.setLeave_work(enter);
+            }
+        }
+    }
 
 
 }

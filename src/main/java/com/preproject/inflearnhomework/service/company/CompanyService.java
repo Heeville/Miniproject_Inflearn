@@ -2,11 +2,13 @@ package com.preproject.inflearnhomework.service.company;
 
 import com.preproject.inflearnhomework.domain.company.member.Member;
 import com.preproject.inflearnhomework.domain.company.member.MemberRepository;
+import com.preproject.inflearnhomework.domain.company.recordwork.RecordWorkRepository;
 import com.preproject.inflearnhomework.domain.company.team.Team;
 import com.preproject.inflearnhomework.domain.company.team.TeamRepository;
 import com.preproject.inflearnhomework.dto.company.member.response.MemberListResponse;
 import com.preproject.inflearnhomework.dto.company.team.response.TeamListResponse;
 import com.preproject.inflearnhomework.exception.InvalidOptionException;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,14 +19,20 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @Service
 public class CompanyService {
 private final TeamRepository teamRepository;
 private final MemberRepository memberRepository;
+private final RecordWorkRepository recordWorkRepository;
 
-    public CompanyService(TeamRepository teamRepository, MemberRepository memberRepository) {
+    public CompanyService(
+            TeamRepository teamRepository,
+            MemberRepository memberRepository,
+            RecordWorkRepository recordWorkRepository) {
         this.teamRepository = teamRepository;
         this.memberRepository = memberRepository;
+        this.recordWorkRepository=recordWorkRepository;
     }
 
     @Transactional
@@ -37,7 +45,7 @@ private final MemberRepository memberRepository;
     }
 
     @Transactional
-    public void createMember(String name, String teamName, boolean isManager, Date birthday, Date workStartDate){
+    public void createMember(String name, String teamName, boolean isManager, LocalDate birthday, LocalDate workStartDate){
 
         boolean teamexist=teamRepository.existsByName(teamName);
         if(!teamexist){
@@ -63,18 +71,29 @@ private final MemberRepository memberRepository;
     public List<MemberListResponse> memberList(){
         return memberRepository.findAll().stream()
                 .map(m -> new MemberListResponse(m.getName(),m.getTeamName(),m.isManager()
-                        ,m.getBirthday().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-                        ,m.getWorkStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()))
+                        ,m.getBirthday(),m.getWorkStartDate()))
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public void enterWork(String name, Date today, LocalTime enter){
+    public void enterWork(String name, LocalDate today, LocalTime enter){
         Member member=memberRepository.findByName(name)
                 .orElseThrow(IllegalArgumentException::new);
 
         member.enterWork(today,enter);
 
+    }
+
+    @Transactional
+    public void leaveWork(String name,LocalDate today,LocalTime leave){
+        Member member=memberRepository.findByName(name)
+                .orElseThrow(IllegalArgumentException::new);
+
+
+        recordWorkRepository.findByNameAndToday(name,today)
+                .orElseThrow(IllegalArgumentException::new);
+
+        member.leaveWork(today,leave);
     }
 
 }

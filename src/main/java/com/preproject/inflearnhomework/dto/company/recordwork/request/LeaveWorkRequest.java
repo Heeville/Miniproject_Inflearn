@@ -7,9 +7,9 @@ import java.time.LocalTime;
 import java.util.Date;
 
 @Getter
-public class EnterWorkRequest {
+public class LeaveWorkRequest {
+
     String name;
     LocalDate today;
-    LocalTime enter;
-
+    LocalTime leave;
 }

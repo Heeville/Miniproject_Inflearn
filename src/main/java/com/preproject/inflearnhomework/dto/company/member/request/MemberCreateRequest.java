@@ -2,6 +2,7 @@ package com.preproject.inflearnhomework.dto.company.member.request;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -11,6 +12,6 @@ public class MemberCreateRequest {
     String name;
     String teamName;
     boolean role;
-    Date birthday;
-    Date workStartDate;
+    LocalDate birthday;
+    LocalDate workStartDate;
 }
