@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
@@ -65,6 +66,15 @@ private final MemberRepository memberRepository;
                         ,m.getBirthday().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
                         ,m.getWorkStartDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()))
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void enterWork(String name, Date today, LocalTime enter){
+        Member member=memberRepository.findByName(name)
+                .orElseThrow(IllegalArgumentException::new);
+
+        member.enterWork(today,enter);
+
     }
 
 }

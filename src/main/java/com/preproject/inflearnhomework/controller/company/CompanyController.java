@@ -3,6 +3,7 @@ package com.preproject.inflearnhomework.controller.company;
 import com.preproject.inflearnhomework.domain.company.team.Team;
 import com.preproject.inflearnhomework.dto.company.member.request.MemberCreateRequest;
 import com.preproject.inflearnhomework.dto.company.member.response.MemberListResponse;
+import com.preproject.inflearnhomework.dto.company.recordwork.request.EnterWorkRequest;
 import com.preproject.inflearnhomework.dto.company.team.request.TeamCreateRequest;
 import com.preproject.inflearnhomework.dto.company.team.response.TeamListResponse;
 import com.preproject.inflearnhomework.service.company.CompanyService;
@@ -37,5 +38,10 @@ public class CompanyController {
     @GetMapping("/view/memberlist")
     public List<MemberListResponse> viewMemberList(){
         return companyService.memberList();
+    }
+
+    @PostMapping("/record/enter")
+    public void enterCompany(@RequestBody EnterWorkRequest request){
+        companyService.enterWork(request.getName(),request.getToday(),request.getEnter());
     }
 }
