@@ -6,6 +6,7 @@ import com.preproject.inflearnhomework.domain.company.recordwork.RecordWorkRepos
 import com.preproject.inflearnhomework.domain.company.team.Team;
 import com.preproject.inflearnhomework.domain.company.team.TeamRepository;
 import com.preproject.inflearnhomework.dto.company.member.response.MemberListResponse;
+import com.preproject.inflearnhomework.dto.company.recordwork.response.ViewWorkResponse;
 import com.preproject.inflearnhomework.dto.company.team.response.TeamListResponse;
 import com.preproject.inflearnhomework.exception.InvalidOptionException;
 import org.springframework.cglib.core.Local;
@@ -78,7 +79,7 @@ private final RecordWorkRepository recordWorkRepository;
     @Transactional
     public void enterWork(String name, LocalDate today, LocalTime enter){
         Member member=memberRepository.findByName(name)
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new InvalidOptionException("400"));
 
         member.enterWork(today,enter);
 
@@ -87,13 +88,23 @@ private final RecordWorkRepository recordWorkRepository;
     @Transactional
     public void leaveWork(String name,LocalDate today,LocalTime leave){
         Member member=memberRepository.findByName(name)
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new InvalidOptionException("400"));
 
 
         recordWorkRepository.findByNameAndToday(name,today)
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new InvalidOptionException("400"));
 
         member.leaveWork(today,leave);
+    }
+
+    @Transactional
+    public ViewWorkResponse viewMemberWork(long id, String year_month){
+        Member member=memberRepository.findById(id)
+                .orElseThrow(() -> new InvalidOptionException("400"));
+
+        return member.calculateWorkforMonth(year_month);
+
+        //return new ViewWorkResponse();
     }
 
 }

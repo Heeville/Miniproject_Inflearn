@@ -5,6 +5,7 @@ import com.preproject.inflearnhomework.dto.company.member.request.MemberCreateRe
 import com.preproject.inflearnhomework.dto.company.member.response.MemberListResponse;
 import com.preproject.inflearnhomework.dto.company.recordwork.request.EnterWorkRequest;
 import com.preproject.inflearnhomework.dto.company.recordwork.request.LeaveWorkRequest;
+import com.preproject.inflearnhomework.dto.company.recordwork.response.ViewWorkResponse;
 import com.preproject.inflearnhomework.dto.company.team.request.TeamCreateRequest;
 import com.preproject.inflearnhomework.dto.company.team.response.TeamListResponse;
 import com.preproject.inflearnhomework.service.company.CompanyService;
@@ -50,4 +51,11 @@ public class CompanyController {
     public void leaveCompany(@RequestBody LeaveWorkRequest request){
         companyService.leaveWork(request.getName(), request.getToday(),request.getLeave());
     }
+
+    @GetMapping("view/memberwork")
+    public ViewWorkResponse viewMemberWork(@RequestParam long id, @RequestParam String year_month){
+        return companyService.viewMemberWork(id,year_month);
+    }
+
+
 }
