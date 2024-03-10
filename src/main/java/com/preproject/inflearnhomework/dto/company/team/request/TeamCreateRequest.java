@@ -6,6 +6,7 @@ import lombok.*;
 public class TeamCreateRequest {
     private String name;
     private String manager =null;
+    private int vacationStandardDate=7;
 
 
 }

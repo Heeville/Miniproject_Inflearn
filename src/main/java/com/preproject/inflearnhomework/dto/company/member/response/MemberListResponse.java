@@ -12,8 +12,10 @@ public class MemberListResponse {
     private String role;
     private LocalDate birthday;
     private LocalDate workStartDate;
+    private int vacation;
 
-    public MemberListResponse(String name, String teamName, boolean role, LocalDate birthday, LocalDate workStartDate) {
+    public MemberListResponse(String name, String teamName, boolean role,
+                              LocalDate birthday, LocalDate workStartDate,int vacation) {
         this.name = name;
         this.teamName = teamName;
         this.birthday = birthday;
@@ -24,5 +26,6 @@ public class MemberListResponse {
         else{
             this.role="MEMBER";
         }
+        this.vacation=vacation;
     }
 }

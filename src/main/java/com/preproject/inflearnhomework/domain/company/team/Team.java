@@ -18,12 +18,14 @@ public class Team {
     String name;
 
     String manager;
+    int vacationStandardDate;
 
     int memberCount;
 
-    public Team(String name, String manager) {
+    public Team(String name, String manager,int vacationStandardDate) {
         this.name = name;
         this.manager = manager;
+        this.vacationStandardDate=vacationStandardDate;
     }
     public Team(){}
 

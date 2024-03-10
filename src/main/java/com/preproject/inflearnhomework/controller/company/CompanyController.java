@@ -24,7 +24,7 @@ public class CompanyController {
 
     @PostMapping("/create/team")
     public void createTeam(@RequestBody TeamCreateRequest request){
-        companyService.createTeam(request.getName(),request.getManager());
+        companyService.createTeam(request.getName(),request.getManager(),request.getVacationStandardDate());
     }
 
     @PostMapping("/create/member")

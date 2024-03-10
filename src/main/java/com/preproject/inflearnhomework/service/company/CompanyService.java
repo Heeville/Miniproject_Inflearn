@@ -37,12 +37,12 @@ private final RecordWorkRepository recordWorkRepository;
     }
 
     @Transactional
-    public void createTeam(String name,String manager){
+    public void createTeam(String name,String manager,int standard){
         boolean nameisexist = teamRepository.existsByName(name);
         if(nameisexist){
             throw new InvalidOptionException("이름이 중복된 팀이 있습니다. 다시 입력해주세요");
         }
-        teamRepository.save(new Team(name,manager));
+        teamRepository.save(new Team(name,manager,standard));
     }
 
     @Transactional
@@ -64,7 +64,8 @@ private final RecordWorkRepository recordWorkRepository;
     @Transactional
     public List<TeamListResponse> teamList(){
         return teamRepository.findAll().stream()
-                .map(team -> new TeamListResponse(team.getName(), team.getManager(), team.getMemberCount()))
+                .map(team -> new TeamListResponse(team.getName(), team.getManager(),
+                        team.getMemberCount(),team.getVacationStandardDate()))
                 .collect(Collectors.toList());
     }
 
@@ -72,7 +73,7 @@ private final RecordWorkRepository recordWorkRepository;
     public List<MemberListResponse> memberList(){
         return memberRepository.findAll().stream()
                 .map(m -> new MemberListResponse(m.getName(),m.getTeamName(),m.isManager()
-                        ,m.getBirthday(),m.getWorkStartDate()))
+                        ,m.getBirthday(),m.getWorkStartDate(),m.getVacation()))
                 .collect(Collectors.toList());
     }
 

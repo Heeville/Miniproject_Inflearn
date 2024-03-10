@@ -25,6 +25,7 @@ public class Member {
     boolean isManager;
     LocalDate birthday;
     LocalDate workStartDate;
+    int vacation=15;
 
     @OneToMany(mappedBy = "member",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MemberRecordWorks> memberRecordWorks =new ArrayList<>();
@@ -32,6 +33,9 @@ public class Member {
     public Member(){}
 
     public Member(String name, String teamName, boolean isManager, LocalDate birthday, LocalDate workStartDate) {
+        if (workStartDate.getYear()==2024){
+            this.vacation=11;
+        }
         this.name = name;
         this.teamName = teamName;
         this.isManager=isManager;
