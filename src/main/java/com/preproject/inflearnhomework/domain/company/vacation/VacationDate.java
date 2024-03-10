@@ -26,4 +26,6 @@ public class VacationDate {
         this.date = date;
         this.member = member;
     }
+
+    public VacationDate(){}
 }

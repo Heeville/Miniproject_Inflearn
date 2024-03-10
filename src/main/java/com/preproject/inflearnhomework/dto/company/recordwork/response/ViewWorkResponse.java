@@ -10,6 +10,7 @@ public class ViewWorkResponse {
 
     int sum;
 
+
     public ViewWorkResponse(List<DayWorkResponse> detail, int sum) {
         this.detail = detail;
         this.sum = sum;

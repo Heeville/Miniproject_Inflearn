@@ -84,7 +84,13 @@ public class Member {
                     .mapToInt(work->calculateWokrMinutes(work.getEnter_work(),work.getLeave_work()))
                     .sum();
             monthtotal+=daytotal;
-            dayWorkResponses.add(new DayWorkResponse(date,daytotal));
+            if (this.vacationDates.stream().filter(vacationDate -> vacationDate.getDate().equals(date)).findFirst().isPresent()){
+                dayWorkResponses.add(new DayWorkResponse(date,daytotal,true));
+
+            }
+            else{
+                dayWorkResponses.add(new DayWorkResponse(date,daytotal));
+            }
         }
        return new ViewWorkResponse(dayWorkResponses,monthtotal);
     }
