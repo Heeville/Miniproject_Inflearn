@@ -1,8 +1,12 @@
 package com.preproject.inflearnhomework.domain.company.member;
 
 import com.preproject.inflearnhomework.domain.company.recordwork.MemberRecordWorks;
+import com.preproject.inflearnhomework.domain.company.team.Team;
+import com.preproject.inflearnhomework.domain.company.team.TeamRepository;
+import com.preproject.inflearnhomework.domain.company.vacation.VacationDate;
 import com.preproject.inflearnhomework.dto.company.recordwork.response.DayWorkResponse;
 import com.preproject.inflearnhomework.dto.company.recordwork.response.ViewWorkResponse;
+import com.preproject.inflearnhomework.exception.InvalidOptionException;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,9 +34,18 @@ public class Member {
     @OneToMany(mappedBy = "member",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MemberRecordWorks> memberRecordWorks =new ArrayList<>();
 
+    //@ManyToOne
+    //@JoinColumn(name="team_id")
+    //private Team team;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<VacationDate> vacationDates = new ArrayList<>();
+
+
     public Member(){}
 
-    public Member(String name, String teamName, boolean isManager, LocalDate birthday, LocalDate workStartDate) {
+    public Member(String name, String teamName, boolean isManager,
+                  LocalDate birthday, LocalDate workStartDate,Team team) {
         if (workStartDate.getYear()==2024){
             this.vacation=11;
         }
@@ -41,6 +54,7 @@ public class Member {
         this.isManager=isManager;
         this.birthday = birthday;
         this.workStartDate = workStartDate;
+        //this.team=team;
     }
 
     public void enterWork(LocalDate today, LocalTime enter){
@@ -81,7 +95,21 @@ public class Member {
         return end-start;
     }
 
+    public void recordVacation(String name,LocalDate startDate,int duration,int limit){
 
+        if (startDate.plusDays(limit).isAfter(LocalDate.now())){
+            throw new InvalidOptionException("연차신청 기간이 지났습니다.");
+        }
+        if(duration>this.vacation) {
+            throw new InvalidOptionException("연차 한도를 초과하였습니다.");
+        }
+        for(int day=0;day<duration; day++){
+            LocalDate vacationday=startDate.plusDays(day);
+            vacationDates.add(new VacationDate(vacationday,this));
+        }
+        this.vacation-=duration;
+
+    }
 
 
 }

@@ -4,6 +4,7 @@ import com.preproject.inflearnhomework.domain.company.team.Team;
 import com.preproject.inflearnhomework.dto.company.member.request.MemberCreateRequest;
 import com.preproject.inflearnhomework.dto.company.member.response.MemberListResponse;
 import com.preproject.inflearnhomework.dto.company.member.response.MemberVacationResponse;
+import com.preproject.inflearnhomework.dto.company.recordwork.request.EnterVacationRequest;
 import com.preproject.inflearnhomework.dto.company.recordwork.request.EnterWorkRequest;
 import com.preproject.inflearnhomework.dto.company.recordwork.request.LeaveWorkRequest;
 import com.preproject.inflearnhomework.dto.company.recordwork.response.ViewWorkResponse;
@@ -61,6 +62,11 @@ public class CompanyController {
     @GetMapping("view/membervacation")
     public MemberVacationResponse vacationResponse(@RequestParam long id){
         return companyService.vacationResponse(id);
+    }
+
+    @PostMapping("/record/vacation")
+    public void memberRecordVacation(@RequestBody EnterVacationRequest request){
+        companyService.recordVacation(request.getName(),request.getStartDate(),request.getDuration());
     }
 
 }

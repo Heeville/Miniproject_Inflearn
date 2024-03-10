@@ -53,8 +53,10 @@ private final RecordWorkRepository recordWorkRepository;
         if(!teamexist){
             throw new InvalidOptionException("해당하는 팀이름이 없습니다. 다시 입력해주세요");
         }
+        teamRepository.findTeamByName(teamName);
 
-        memberRepository.save(new Member(name,teamName,isManager,birthday,workStartDate));
+        memberRepository.save(new Member(name,teamName,isManager,birthday
+                ,workStartDate,teamRepository.findTeamByName(teamName)));
         teamRepository.findTeamByName(teamName).addMemberCount();
         if (isManager){
             teamRepository.findTeamByName(teamName).setManager(name);
@@ -115,5 +117,16 @@ private final RecordWorkRepository recordWorkRepository;
                 .orElseThrow(() -> new InvalidOptionException("400"));
 
         return new MemberVacationResponse(member.getName(), member.getTeamName(), member.getVacation());
+    }
+
+    @Transactional
+    public void recordVacation(String name,LocalDate startdate, int duration){
+        Member member=memberRepository.findByName(name)
+                .orElseThrow(()->new InvalidOptionException("400"));
+
+        int limit=teamRepository.findTeamByName(member.getTeamName()).getVacationStandardDate();
+
+        member.recordVacation(name,startdate,duration,limit);
+
     }
 }
