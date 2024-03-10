@@ -6,6 +6,7 @@ import com.preproject.inflearnhomework.domain.company.recordwork.RecordWorkRepos
 import com.preproject.inflearnhomework.domain.company.team.Team;
 import com.preproject.inflearnhomework.domain.company.team.TeamRepository;
 import com.preproject.inflearnhomework.dto.company.member.response.MemberListResponse;
+import com.preproject.inflearnhomework.dto.company.member.response.MemberVacationResponse;
 import com.preproject.inflearnhomework.dto.company.recordwork.response.ViewWorkResponse;
 import com.preproject.inflearnhomework.dto.company.team.response.TeamListResponse;
 import com.preproject.inflearnhomework.exception.InvalidOptionException;
@@ -108,4 +109,11 @@ private final RecordWorkRepository recordWorkRepository;
         //return new ViewWorkResponse();
     }
 
+    @Transactional
+    public MemberVacationResponse vacationResponse(long id) {
+        Member member=memberRepository.findById(id)
+                .orElseThrow(() -> new InvalidOptionException("400"));
+
+        return new MemberVacationResponse(member.getName(), member.getTeamName(), member.getVacation());
+    }
 }
