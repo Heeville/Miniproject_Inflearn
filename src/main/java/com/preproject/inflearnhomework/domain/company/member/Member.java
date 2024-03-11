@@ -58,13 +58,20 @@ public class Member {
     }
 
     public void enterWork(LocalDate today, LocalTime enter){
+        if(memberRecordWorks.stream().filter(temp->temp.getToday().isEqual(today) &&
+                temp.getLeave_work()==null).count()!=0){
+            throw new InvalidOptionException("오늘 퇴근도 안했는데 왜 출근기록을 또 작성하십니까?");
+        }
         //this.memberRecordWorks.add(new MemberRecordWorks(this.id,this.name,today,enter));
         this.memberRecordWorks.add(new MemberRecordWorks(this,today,enter));
     }
 
     public void leaveWork(LocalDate today,LocalTime enter){
         for(MemberRecordWorks m:memberRecordWorks){
-            if (m.getToday().equals(today)){
+            if (m.getToday().equals(today) && m.getLeave_work()==null){
+                if(m.getEnter_work().isAfter(enter)){
+                    throw new InvalidOptionException("퇴근시간이 출근시간보다 먼저에요. 다시 입력하세요");
+                }
                 m.setLeave_work(enter);
             }
         }

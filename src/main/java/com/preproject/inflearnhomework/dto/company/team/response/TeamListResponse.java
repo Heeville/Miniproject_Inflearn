@@ -16,4 +16,5 @@ public class TeamListResponse {
         this.memberCount = memberCount;
         this.vacationStandardDate=vacationStandardDate;
     }
+
 }
