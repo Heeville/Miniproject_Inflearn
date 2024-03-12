@@ -67,6 +67,7 @@ public class CompanyController {
     @PostMapping("/record/vacation")
     public void memberRecordVacation(@RequestBody EnterVacationRequest request){
         companyService.recordVacation(request.getName(),request.getStartDate(),request.getDuration());
+
     }
 
 }

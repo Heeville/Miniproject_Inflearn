@@ -21,7 +21,6 @@ public class MemberRecordWorks {
     String name;
     LocalDate today;
     LocalTime enter_work;
-
     LocalTime leave_work;
 
     protected MemberRecordWorks(){}
